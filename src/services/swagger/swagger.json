@@ -77,6 +77,32 @@
         }
     }
    
+},"/forgotpassword": {
+    "post": {
+        "tags": [],
+        "description": "Forgot password",
+        "parameters": [
+            {
+               "name": "Reset Link is send",
+                "in": "body",
+                "description": "forgot password",
+                "schema": {
+                    "$ref": "#/definitions/forgotpassword"
+                }
+            }
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "responses": {
+            "201": {
+                "description": "Reset is send"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+        }
+    }
 },
 "definitions": {
     "User": {
@@ -105,45 +131,13 @@
                 }
             }
 
-    },"/forgotpssword": {
-    "post": {
-        "tags": [],
-        "description": "Forgot password",
-        "parameters": [
-            {
-               "name": "forgotpassword user",
-                "in": "body",
-                "description": "Forgot password",
-                "schema": {
-                    "$ref": "#/definitions/forgotpassword"
-                }
-            }
-        ],
-        "produces": [
-            "application/json"
-        ],
-        "responses": {
-            "201": {
-                "description": "Reset link sent"
-            },
-            "500": {
-                "description": "Internal server error"
-            }
-     
-           }
-           }
     }, "Forgot password":{
         "type": "object",
               "properties": {
                   "email": {
                       "type": "string"
-                  },"password": {
-                      "type": "string"
-                  }
-              }
-  
-    
+                  }                  
+              }      
 }
-
 }
 }
