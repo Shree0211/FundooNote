@@ -46,26 +46,16 @@ export const forgotpassword = async (body) => {
   };
 
   
-  
-export const newser = async (body) => {
-  const saltRounds = 10;
-  const salt = await bcrypt.genSalt(saltRounds);
-  const hashPassword = await bcrypt.hash(body.password, salt);
-  body.password = hashPassword;
-  const data = await User.create(body);
-  return data;
-};
-
   export const resetpassword = async (body) => {
-    const searchData = await User.findOne({ email: body.email });
-    if (body.email==searchData.email) 
-    {
-        var token = jwt.sign({"id": searchData._id, "email":searchData.email}, process.env.SECRETKEY);
-        const result = await main(searchData.email,token)
-        return result;
-      }
-      else {
-        throw new Error("Email doesnt exist");
-      }
-    };
-
+    console.log("body is" ,body);
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashPassword = await bcrypt.hash(body.password, salt);
+    body.password = hashPassword;
+    const data = await User.findOneAndUpdate(
+      { email: body.email },
+      { password: hashPassword }
+    );
+    console.log("data is " ,data);
+    return data;
+  };

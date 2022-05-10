@@ -29,3 +29,22 @@ export const userAuth = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const userAuthpassword = async (req, res, next) => {
+  try {
+    let bearerToken = req.headers['token'];
+    console.log("Token generated is :",bearerToken);
+    if (!bearerToken)
+      throw {
+        code: HttpStatus.BAD_REQUEST,
+        message: 'Authorization token is required'
+      };
+      const user = await jwt.verify(bearerToken, process.env.SECRETKEY);
+      req.body.email=user.email;
+      console.log("body",req.body.email);
+    next();
+  } catch (error) {
+    next(error);
+  }
+};

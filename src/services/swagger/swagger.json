@@ -1,0 +1,149 @@
+{
+    "swagger" : "2.0",
+   "info": {
+       "version": "V1",
+       "title": " F App",
+       "description": "CLI App API"
+   },
+   "host": "localhost:2000",
+   "basePath": "/api/v1/users/",
+   "tags": [
+       {
+           "name": "CLI",
+           "description": "Creating user......."
+       }
+   ],
+   "schemes": [
+    "http"
+],
+"consumes": [
+    "application/json"
+],
+"produces": [
+    "application/json"
+],
+"paths": {
+    "/users/res": {
+        "post": {
+            "tags": [],
+            "description": "create name...",
+            "parameters": [
+                {
+                    "name": "Create name",
+                    "in": "body",
+                    "description": "Create",
+                    "schema": {
+                        "$ref": "#/definitions/User"
+                    }
+                }
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "201": {
+                    "description": "New user is created"
+                },
+                "500": {
+                    "description": "Internal server error"
+                }
+            }
+        }
+    },"/login": {
+        "post": {
+            "tags": [],
+            "description": "login name...",
+            "parameters": [
+                {
+                   "name": "login user",
+                    "in": "body",
+                    "description": "login",
+                    "schema": {
+                        "$ref": "#/definitions/login"
+                    }
+                }
+            ],
+            "produces": [
+                "application/json"
+            ],
+            "responses": {
+                "201": {
+                    "description": "New user is created"
+                },
+                "500": {
+                    "description": "Internal server error"
+                }
+            }
+        }
+    }
+   
+},
+"definitions": {
+    "User": {
+        "type": "object",
+        "properties": {
+            "fname": {
+                "type": "string"
+            },
+            "lname": {
+                "type": "string"
+            },
+            "email": {
+                "type": "string"
+            },"password": {
+                "type": "string"
+            }
+        }
+    },
+    "loging":{
+      "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },"password": {
+                    "type": "string"
+                }
+            }
+
+    },"/forgotpssword": {
+    "post": {
+        "tags": [],
+        "description": "Forgot password",
+        "parameters": [
+            {
+               "name": "forgotpassword user",
+                "in": "body",
+                "description": "Forgot password",
+                "schema": {
+                    "$ref": "#/definitions/forgotpassword"
+                }
+            }
+        ],
+        "produces": [
+            "application/json"
+        ],
+        "responses": {
+            "201": {
+                "description": "Reset link sent"
+            },
+            "500": {
+                "description": "Internal server error"
+            }
+     
+           }
+           }
+    }, "Forgot password":{
+        "type": "object",
+              "properties": {
+                  "email": {
+                      "type": "string"
+                  },"password": {
+                      "type": "string"
+                  }
+              }
+  
+    
+}
+
+}
+}
