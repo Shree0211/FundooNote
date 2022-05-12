@@ -37,5 +37,35 @@ describe('User APIs Test', () => {
           done();
         });
     });
+    describe('POST /registration', () => {
+      it('give new user when added should return status 201', (done) => {
+        const userdetails={
+          "firstname":"maanvi",
+          "lastname":"maheta",
+          "email":"m`@gmail.com",
+          "password":"12345"
+        };
+        request(app)
+          .get('/api/v1/users')
+          .end((err, res) => {
+            expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
+            done();
+          });
+      });
+      it('give new user when added invalid details returns', (done) => {
+        const userdetails={
+          "firstname":"abc",
+          "lastname":"shah",
+          "email":"s@gmail.com",
+          "password":"12345"
+        };
+        request(app)
+          .get('/api/v1/users')
+          .end((err, res) => {
+            expect(res.statusCode).to.be.equal(HttpStatus.INTERNAL_SERVER_ERROR);
+            done();
+          });
+      });
   });
+});
 });
