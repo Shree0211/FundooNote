@@ -27,13 +27,13 @@ describe('User APIs Test', () => {
 
     done();
   });
-    describe('POST /registration', () => {
+  describe('POST /registration', () => {
       it('give new user when added should return status 201', (done) => {
         const userdetails={
-          "firstname":"maanvi",
-          "lastname":"maheta",
-          "email":"kotonas992@azteen.com",
-          "password":"12345"
+          firstname:"maanvi",
+          lastname:"maheta",
+          email:"kotonas992@azteen.com",
+          password:"12345"
         };
         request(app)
           .post('/api/v1/users')
@@ -45,10 +45,10 @@ describe('User APIs Test', () => {
       });
       it('give new user when added invalid details returns', (done) => {
         const userdetails={
-          "firstname":"ma",
-          "lastname":"maheta",
-          "email":"kotonas992@azteen.com",
-          "password":"12345"
+          firstname:"ma",
+          lastname:"maheta",
+          email:"kotonas992@azteen.com",
+          password:"12345"
         };
         request(app)
           .post('/api/v1/users')
@@ -57,12 +57,13 @@ describe('User APIs Test', () => {
             expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
             done();
           });
+       });
       });
       describe('POST /login', () => {
         it('Login details are successfull', (done) => {
           const userdetails={
-            "email":"kotonas992@azteen.com",
-            "password":"12345"
+            email:"kotonas992@azteen.com",
+            password:"12345"
           };
           request(app)
             .post('/api/v1/users/login')
@@ -73,10 +74,11 @@ describe('User APIs Test', () => {
               done();
             });
         });
+      });
       describe('POST /forgotpassword', () => {
         it('send reset link when email id matches', (done) => {
           const userdetails={
-            "email":"kotonas992@azteen.com"
+            email:"kotonas992@azteen.com"
           };
           request(app)
             .post('/api/v1/users/forgotpassword')
@@ -86,8 +88,37 @@ describe('User APIs Test', () => {
               done();
             });
         });
-       
-  });
-});
-});
+      });
+      // describe('PUT /resetpassword', () => {
+      //   it('when user successfully rest password', (done) => {
+      //     const userdetails={
+      //       "password":"kotonas992@azteen.com"
+      //     };
+      //     request(app)
+      //       .post('/api/v1/users/resetpassword')
+      //       .send(userdetails)
+      //       .set('Authorization', `${loginToken}`)
+      //       .end((err, res) => {
+      //        // loginToken=res.body.data;
+      //         expect(res.statusCode).to.be.equal(HttpStatus.OK);
+      //         done();
+      //       });
+        //});
+
+        describe('POST/addNewNote', () => {
+          it('user adding new note', (done) => {
+            const notedetails={
+              Title:"Hello World",
+              Description:"Helloworld note"
+            };
+            request(app)
+              .post('/api/v1/note')
+              .send(notedetails)
+              .set('token', `${loginToken}`)
+              .end((err,res)=>{
+                expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
+                done();
+              });
+          });
+   });
 });

@@ -53,7 +53,7 @@ export const login = async (req, res, next) => {
         res.status(HttpStatus.OK).json({
           code: HttpStatus.OK,
           data: data,
-          message: 'password is reset sucessfully '
+          message: 'password is reset sucessfully'
         });
       } catch (error) {
         next(error);
