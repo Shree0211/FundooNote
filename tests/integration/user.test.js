@@ -1,8 +1,10 @@
-import { expect } from 'chai';
+  import { expect } from 'chai';
 import request from 'supertest';
 import mongoose from 'mongoose';
+import HttpStatus from 'http-status-codes';
 
 import app from '../../src/index';
+let loginToken;
 
 describe('User APIs Test', () => {
   before((done) => {
@@ -25,28 +27,17 @@ describe('User APIs Test', () => {
 
     done();
   });
-
-  describe('GET /users', () => {
-    it('should return empty array', (done) => {
-      request(app)
-        .get('/api/v1/users')
-        .end((err, res) => {
-          expect(res.statusCode).to.be.equal(200);
-          expect(res.body.data).to.be.an('array');
-
-          done();
-        });
-    });
     describe('POST /registration', () => {
       it('give new user when added should return status 201', (done) => {
         const userdetails={
           "firstname":"maanvi",
           "lastname":"maheta",
-          "email":"m`@gmail.com",
+          "email":"kotonas992@azteen.com",
           "password":"12345"
         };
         request(app)
-          .get('/api/v1/users')
+          .post('/api/v1/users')
+          .send(userdetails)
           .end((err, res) => {
             expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
             done();
@@ -54,18 +45,49 @@ describe('User APIs Test', () => {
       });
       it('give new user when added invalid details returns', (done) => {
         const userdetails={
-          "firstname":"abc",
-          "lastname":"shah",
-          "email":"s@gmail.com",
+          "firstname":"ma",
+          "lastname":"maheta",
+          "email":"kotonas992@azteen.com",
           "password":"12345"
         };
         request(app)
-          .get('/api/v1/users')
+          .post('/api/v1/users')
+          .send(userdetails)
           .end((err, res) => {
-            expect(res.statusCode).to.be.equal(HttpStatus.INTERNAL_SERVER_ERROR);
+            expect(res.statusCode).to.be.equal(HttpStatus.BAD_REQUEST);
             done();
           });
       });
+      describe('POST /login', () => {
+        it('Login details are successfull', (done) => {
+          const userdetails={
+            "email":"kotonas992@azteen.com",
+            "password":"12345"
+          };
+          request(app)
+            .post('/api/v1/users/login')
+            .send(userdetails)
+            .end((err, res) => {
+               loginToken=res.body.data;
+              expect(res.statusCode).to.be.equal(HttpStatus.OK);
+              done();
+            });
+        });
+      describe('POST /forgotpassword', () => {
+        it('send reset link when email id matches', (done) => {
+          const userdetails={
+            "email":"kotonas992@azteen.com"
+          };
+          request(app)
+            .post('/api/v1/users/forgotpassword')
+            .send(userdetails)
+            .end((err, res) => {
+              expect(res.statusCode).to.be.equal(HttpStatus.OK);
+              done();
+            });
+        });
+       
   });
+});
 });
 });
