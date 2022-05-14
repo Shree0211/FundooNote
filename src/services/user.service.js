@@ -31,14 +31,14 @@ export const newUser = async (body) => {
 
 export const forgotpassword = async (body) => {
   const searchdata = await User.findOne({ email: body.email });
-  console.log("Searchdata",searchdata);
-  console.log("body.email",body.email);
+ // console.log("Searchdata",searchdata);
+  //console.log("body.email",body.email);
   
   if (body.email==searchdata.email) 
   {
       var token = jwt.sign({"id": searchdata._id,"email":searchdata.email}, process.env.SECRETKEY);
       const result = await main(searchdata.email,token)
-      return result;
+      return token;
     }
     else {
       throw new Error("Email doesnt exist");
@@ -47,7 +47,7 @@ export const forgotpassword = async (body) => {
 
   
   export const resetpassword = async (body) => {
-    console.log("body is" ,body);
+  //  console.log("body is" ,body);
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashPassword = await bcrypt.hash(body.password, salt);
@@ -56,6 +56,6 @@ export const forgotpassword = async (body) => {
       { email: body.email },
       { password: hashPassword }
     );
-    console.log("data is " ,data);
+    //console.log("data is " ,data);
     return data;
   };

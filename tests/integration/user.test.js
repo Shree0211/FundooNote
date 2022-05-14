@@ -5,6 +5,7 @@ import HttpStatus from 'http-status-codes';
 
 import app from '../../src/index';
 let loginToken;
+let resetToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2NmOGI2YzcwNzRhMDZiODdjYmUwZiIsImVtYWlsIjoibWlyYWhlZzc1OEBkdWV0dWJlLmNvbSIsImlhdCI6MTY1MjM1NzMzN30.UO5CV3mi3cRsQ8AIJ2ruV_4Pmholu1nxJIjuwn1vSNU';
 
 describe('User APIs Test', () => {
   before((done) => {
@@ -32,7 +33,7 @@ describe('User APIs Test', () => {
         const userdetails={
           firstname:"maanvi",
           lastname:"maheta",
-          email:"kotonas992@azteen.com",
+          email:"miraheg758@duetube.com",
           password:"12345"
         };
         request(app)
@@ -47,7 +48,7 @@ describe('User APIs Test', () => {
         const userdetails={
           firstname:"ma",
           lastname:"maheta",
-          email:"kotonas992@azteen.com",
+          email:"miraheg758@duetube.com",
           password:"12345"
         };
         request(app)
@@ -62,7 +63,7 @@ describe('User APIs Test', () => {
       describe('POST /login', () => {
         it('Login details are successfull', (done) => {
           const userdetails={
-            email:"kotonas992@azteen.com",
+            email:"miraheg758@duetube.com",
             password:"12345"
           };
           request(app)
@@ -78,34 +79,35 @@ describe('User APIs Test', () => {
       describe('POST /forgotpassword', () => {
         it('send reset link when email id matches', (done) => {
           const userdetails={
-            email:"kotonas992@azteen.com"
+            email:"miraheg758@duetube.com"
           };
           request(app)
             .post('/api/v1/users/forgotpassword')
             .send(userdetails)
             .end((err, res) => {
+             resetToken= res.body.data;
               expect(res.statusCode).to.be.equal(HttpStatus.OK);
               done();
             });
         });
       });
-      // describe('PUT /resetpassword', () => {
-      //   it('when user successfully rest password', (done) => {
-      //     const userdetails={
-      //       "password":"kotonas992@azteen.com"
-      //     };
-      //     request(app)
-      //       .post('/api/v1/users/resetpassword')
-      //       .send(userdetails)
-      //       .set('Authorization', `${loginToken}`)
-      //       .end((err, res) => {
-      //        // loginToken=res.body.data;
-      //         expect(res.statusCode).to.be.equal(HttpStatus.OK);
-      //         done();
-      //       });
-        //});
+      describe('PUT /resetpassword', () => {
+        it('when user successfully rest password', (done) => {
+          const userdetails={
+            password:"miraheg758@duetube.com"
+          };
+          request(app)
+            .put('/api/v1/users/resetpassword')
+            .set('token', `${resetToken}`)
+            .send(userdetails)
+            .end((err, res) => {
+              expect(res.statusCode).to.be.equal(HttpStatus.OK);
+              done();
+            });
+            });
+        });
 
-        describe('POST/addNewNote', () => {
+         describe('POST/addNewNote', () => {
           it('user adding new note', (done) => {
             const notedetails={
               Title:"Hello World",
@@ -120,5 +122,21 @@ describe('User APIs Test', () => {
                 done();
               });
           });
-   });
-});
+        });
+        // describe('PUT /updateNote', () => {
+        //   it('note is updated with id', (done) => {
+        //     const notedetails={
+        //       Title:"Hello World ",
+        //       Description:"Helloworld note updated"
+        //     };
+        //     request(app)
+        //       .post('/api/v1/note/:_id')
+        //       .send(notedetails)
+        //       .set('token', `${loginToken}`)
+        //       .end((err, res) => {
+        //         expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
+        //         done();
+        //       });
+        //   });
+        // });
+});  
