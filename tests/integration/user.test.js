@@ -6,7 +6,7 @@ import HttpStatus from 'http-status-codes';
 import app from '../../src/index';
 let loginToken;
 let resetToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2NmOGI2YzcwNzRhMDZiODdjYmUwZiIsImVtYWlsIjoibWlyYWhlZzc1OEBkdWV0dWJlLmNvbSIsImlhdCI6MTY1MjM1NzMzN30.UO5CV3mi3cRsQ8AIJ2ruV_4Pmholu1nxJIjuwn1vSNU';
-
+let noteId= '627f0ed542a9690514eb7bed';
 describe('User APIs Test', () => {
   before((done) => {
     const clearCollections = () => {
@@ -123,20 +123,20 @@ describe('User APIs Test', () => {
               });
           });
         });
-        // describe('PUT /updateNote', () => {
-        //   it('note is updated with id', (done) => {
-        //     const notedetails={
-        //       Title:"Hello World ",
-        //       Description:"Helloworld note updated"
-        //     };
-        //     request(app)
-        //       .post('/api/v1/note/:_id')
-        //       .send(notedetails)
-        //       .set('token', `${loginToken}`)
-        //       .end((err, res) => {
-        //         expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
-        //         done();
-        //       });
-        //   });
-        // });
+         describe('PUT /updateNote', () => {
+          it('note is updated with id', (done) => {
+            const notedetails={
+              Title:"Hello World ",
+              Description:"Helloworld note updated"
+            };
+            request(app)
+              .put('/api/v1/note/${noteId')
+              .send(notedetails)
+              .set('token', `${loginToken}`)
+              .end((err, res) => {
+                expect(res.statusCode).to.be.equal(HttpStatus.CREATED);
+                done();
+              });
+          });
+        });
 });  
