@@ -8,6 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../src/services/swagger/swagger.json'
 
 import routes from './routes';
+import { connectredis } from './config/redis';
 import database from './config/database';
 import {
   appErrorHandler,
@@ -29,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('combined', { stream: logStream }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+connectredis();
 database();
 
 app.use(`/api/${api_version}`, routes());

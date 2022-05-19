@@ -1,6 +1,7 @@
 import { id } from '@hapi/joi/lib/base';
 import { log } from 'winston';
 import Note from '../models/note.model';
+import { client } from '../config/redis';
 
 export const addNewNote = async (body) => {
    
@@ -11,6 +12,7 @@ export const addNewNote = async (body) => {
   //get all users
 export const getAllNotes = async (userid) => {
   const data = await Note.find(userid);
+  await client.set('getnotes',JSON.stringify(data));
   return data;
 };
 

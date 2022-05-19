@@ -1,4 +1,4 @@
-  import { expect } from 'chai';
+import { expect } from 'chai';
 import request from 'supertest';
 import mongoose from 'mongoose';
 import HttpStatus from 'http-status-codes';
