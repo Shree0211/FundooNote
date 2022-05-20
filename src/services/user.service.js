@@ -2,6 +2,7 @@
 const bcrypt = require('bcrypt');
 import jwt from 'jsonwebtoken';
 import {main} from '../utils/helper';
+import { publisher } from '../config/rabbitMQ';
 
 export const login = async (body) => {
   const data = await User.findOne({ email: body.email });
@@ -26,8 +27,11 @@ export const newUser = async (body) => {
   const hashPassword = await bcrypt.hash(body.password, salt);
   body.password = hashPassword;
   const data = await User.create(body);
+  publisher(data);
   return data;
 };
+
+
 
 export const forgotpassword = async (body) => {
   const searchdata = await User.findOne({ email: body.email });

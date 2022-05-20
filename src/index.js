@@ -5,7 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from '../src/services/swagger/swagger.json'
+import swaggerDocument from '../src/swagger/swagger.json'
 
 import routes from './routes';
 import { connectredis } from './config/redis';
